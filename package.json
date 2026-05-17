@@ -1,0 +1,28 @@
+{
+  "name": "terpinsider",
+  "version": "1.0.0",
+  "description": "TerpInsider Final Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch index.js --watch .env index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyushTyagi227/Terpinsider.git"
+  },
+  "author": "Ayushman Tyagi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AyushTyagi227/Terpinsider/issues"
+  },
+  "homepage": "https://github.com/AyushTyagi227/Terpinsider#readme",
+  "dependencies": {
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.105.4",
+    "body-parser": "^2.2.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}

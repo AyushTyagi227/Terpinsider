@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerpInsider – Nala</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="nala-page">
+  <nav>
+    <a href="index.html" class="logo">Terp<span>Insider</span></a>
+    <ul>
+      <li><a href="index.html" class="active">Nala</a></li>
+      <li><a href="clubs.html">Clubs</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="nala-hero-band">
+    <div class="nala-face-large" aria-hidden="true">
+      <div class="nala-eyes">
+        <span class="nala-eye"></span>
+        <span class="nala-eye"></span>
+      </div>
+      <span class="nala-mouth"></span>
+    </div>
+    <p class="nala-cta">Ask Nala anything about UMD clubs</p>
+  </div>
+
+  <div class="nala-layout">
+    <div class="nala-chat" id="chat-messages" role="log" aria-live="polite">
+      <div class="chat-bubble assistant">
+        <p>Hey! I'm Nala! You can ask me any questions you have about clubs here at UMD. Tell me your interests, what you're looking for, or where on campus you'd like to meet.</p>
+      </div>
+    </div>
+
+    <form class="nala-input-row" id="nala-form">
+      <input
+        type="text"
+        id="nala-input"
+        placeholder="Message Nala…"
+        autocomplete="off"
+        required
+        aria-label="Message to Nala"
+      >
+      <button type="submit" class="btn" id="nala-send">Send</button>
+    </form>
+
+    <p class="nala-hint">Or <a href="clubs.html">browse all clubs</a></p>
+  </div>
+
+  <footer>
+    <p>TerpInsider &copy; 2026 – University of Maryland</p>
+  </footer>
+
+  <script src="nala.js"></script>
+</body>
+</html>

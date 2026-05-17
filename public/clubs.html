@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clubs Directory – TerpInsider</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo">Terp<span>Insider</span></a>
+    <ul>
+      <li><a href="index.html">Nala</a></li>
+      <li><a href="clubs.html" class="active">Clubs</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Clubs Directory</h1>
+    <p class="page-subtitle">
+      Browse and search University of Maryland student organizations.
+    </p>
+
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search by name, category, or description…" aria-label="Search clubs">
+    </div>
+
+    <div class="filters">
+      <label for="category-filter">Category:</label>
+      <select id="category-filter">
+        <option value="">All categories</option>
+      </select>
+      <span id="result-count" class="page-subtitle" style="margin-left: auto; margin-bottom: 0;"></span>
+    </div>
+
+    <div id="clubs-container" class="clubs-grid">
+      <p class="status">Loading clubs…</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>TerpInsider &copy; 2026 – INST377 Final Project</p>
+  </footer>
+
+  <script src="clubs.js"></script>
+</body>
+</html>

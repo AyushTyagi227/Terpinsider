@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About – TerpInsider</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">Terp<span>Insider</span></a>
+      <ul>
+        <li><a href="index.html">Nala</a></li>
+        <li><a href="clubs.html">Clubs</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+    </nav>
+
+    <div class="container about-content">
+      <h1>About TerpInsider</h1>
+
+      <h2>What is TerpInsider?</h2>
+      <p>
+        TerpInsider is a web application built to help students discover clubs
+        and organizations on campus, compare them by category, view realistic
+        meeting locations on a map, and read reviews from other students.
+      </p>
+
+      <h2>Target Users</h2>
+      <p>
+        University of Maryland students who want to find clubs that match their
+        interests, especially new students exploring campus life or
+        upperclassmen looking for new organizations.
+      </p>
+
+      <h2>Nala – AI Club Advisor</h2>
+      <p>
+        The home page features Nala an AI chatbot powered by OpenAI that
+        recommends clubs from our Supabase database based on what you describe
+        (interests, location, category, and more).
+      </p>
+
+      <h2>Project Goals</h2>
+      <ul>
+        <li>Centralize club discovery in one searchable directory</li>
+        <li>Make it easy to filter clubs by category</li>
+        <li>Show meeting locations using maps (OpenStreetMap + Leaflet)</li>
+        <li>Allow students to leave and view reviews with rating charts</li>
+        <li>
+          Eventually support AI-powered club recommendations (future roadmap)
+        </li>
+      </ul>
+
+      <h2>Technologies</h2>
+      <ul>
+        <li>
+          Frontend: HTML, CSS, JavaScript (Fetch API), Leaflet.js, Chart.js
+        </li>
+        <li>Backend: Node.js, Express</li>
+        <li>Database: Supabase (PostgreSQL)</li>
+        <li>External API: OpenStreetMap Nominatim (geocoding)</li>
+        <li>Deployment: Vercel</li>
+      </ul>
+
+      <p style="margin-top: 2rem">
+        <a href="clubs.html" class="btn">Browse Clubs</a>
+      </p>
+    </div>
+
+    <footer>
+      <p>TerpInsider &copy; 2026 – INST377 Final Project</p>
+    </footer>
+  </body>
+</html>
