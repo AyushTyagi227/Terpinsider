@@ -1,266 +1,181 @@
-# TerpInsider Developer Manual
+# Developer Manual
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AyushTyagi227/Terpinsider.git
-   cd Terpinsider
-   ```
+To run this project locally, first clone the repository:
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/AyushTyagi227/Terpinsider.git
+cd Terpinsider
+```
 
-3. Create a `.env` file in the project root (do not commit this file):
-   ```
-   SUPABASE_URL=https://your-project.supabase.co
-   SUPABASE_KEY=your_supabase_key
-   ```
+Install the required dependencies:
 
-4. In Supabase, ensure you have:
-   - A `clubs` table with columns: `id`, `clubName`, `category`, `description`, `meeting_text`, `lat`, `lon`, `created_at`
-   - A `reviews` table with columns: `id`, `club_id`, `reviewer_name`, `rating`, `review_text`, `created_at`
+```bash
+npm install
+```
 
-## Running locally
+Create a `.env` file in the main project folder. This file should not be pushed to GitHub.
+
+```env
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_key
+OPENAI_API_KEY=your_openai_api_key
+```
+
+The Supabase database should include two main tables.
+
+The `clubs` table should include:
+
+```txt
+id
+clubName
+category
+description
+meeting_text
+lat
+lon
+created_at
+```
+
+The `reviews` table should include:
+
+```txt
+id
+club_id
+reviewer_name
+rating
+review_text
+created_at
+```
+
+## Running the Application
+
+To start the server locally, run:
 
 ```bash
 npm start
 ```
 
-This runs `nodemon` and restarts the server when files change. The app is available at **http://localhost:3000**.
+The app will run at:
 
-For production-style run without nodemon:
+```txt
+http://localhost:3000
+```
+
+If `npm start` does not work, run:
 
 ```bash
 node index.js
 ```
 
-## Running tests
+## Running Tests
 
-There are no automated test scripts. Use manual testing:
+There are no automated tests for this project.
 
-1. Home page loads and shows category pills.
-2. Clubs page lists clubs and filters work.
-3. Club detail page shows info, map, chart, and review form.
-4. Submitting a review updates the list and chart.
+Testing is done manually by opening the website and checking that:
 
-## Project structure
+- The home page loads.
+- Clubs load from Supabase.
+- Club detail pages display the correct club information.
+- Reviews can be submitted.
+- The map loads using the club meeting location.
+- Nala returns club recommendations.
 
-```
-Terpinsider/
-├── index.js          # Express backend
-├── package.json
-├── vercel.json       # Vercel deployment config
-├── .env              # Local secrets (not in git)
-├── public/           # Frontend static files
-│   ├── index.html    # Home
-│   ├── clubs.html    # Directory
-│   ├── club.html     # Detail + reviews + map
-│   ├── about.html    # About
-│   ├── styles.css
-│   ├── main.js
-│   ├── clubs.js
-│   └── club.js
-└── docs/
-    └── developer-manual.md
-```
+## Server API Endpoints
 
-## API documentation
+### GET `/api/clubs`
 
-All frontend data access goes through these backend routes. The frontend does not call Supabase or Nominatim directly.
+Gets all clubs from the Supabase `clubs` table.
 
-### GET `/clubs` and GET `/api/clubs`
-
-Retrieves all clubs from the Supabase `clubs` table.
-
-**Response (200):** JSON array of club objects.
-
-```json
-[
-  {
-    "id": 1,
-    "clubName": "Archery Club",
-    "category": "Sports",
-    "description": "...",
-    "meeting_text": "Eppley Recreation Center, College Park MD",
-    "lat": null,
-    "lon": null,
-    "created_at": "2026-01-01T00:00:00+00:00"
-  }
-]
-```
-
-**Errors:** `500` with `{ "error": "message" }`.
-
----
+Used by the frontend to display the club directory.
 
 ### GET `/api/clubs/:id`
 
-Retrieves a single club by `id`.
+Gets one club by its ID.
 
-**Parameters:** `id` (path) – club primary key.
+Used by the club detail page.
 
-**Response (200):** Single club object.
+### POST `/api/clubs`
 
-**Errors:** `404` if not found, `500` on database error.
+Adds a new club to the Supabase `clubs` table.
 
----
-
-### POST `/club` and POST `/api/clubs`
-
-Inserts a new club into Supabase.
-
-**Request body (JSON):**
+Expected JSON body:
 
 ```json
 {
   "clubName": "Example Club",
   "category": "Academic",
-  "description": "Club description",
+  "description": "Example description",
   "meeting_text": "Stamp Student Union, College Park MD",
   "lat": null,
   "lon": null
 }
 ```
 
-Use exact column names: `clubName`, `meeting_text`, `lat`, `lon`.
-
-**Response (200):** JSON array with the inserted row(s).
-
-**Errors:** `500` on validation or database error.
-
----
-
 ### GET `/api/reviews/:clubId`
 
-Retrieves all reviews for a club, newest first.
+Gets all reviews for a specific club.
 
-**Parameters:** `clubId` (path) – matches `reviews.club_id`.
+Used on the club detail page.
 
-**Response (200):** JSON array of review objects.
+### POST `/api/reviews`
 
-```json
-[
-  {
-    "id": 1,
-    "club_id": 5,
-    "reviewer_name": "Alex",
-    "rating": 5,
-    "review_text": "Great club!",
-    "created_at": "2026-05-01T12:00:00+00:00"
-  }
-]
-```
+Adds a new review to the Supabase `reviews` table.
 
----
-
-### POST `/api/reviews` and POST `/reviews`
-
-Inserts a new review.
-
-**Request body (JSON):**
+Expected JSON body:
 
 ```json
 {
-  "club_id": 5,
-  "reviewer_name": "Alex",
+  "club_id": 1,
+  "reviewer_name": "Student Name",
   "rating": 5,
-  "review_text": "Great club!"
+  "review_text": "Great club."
 }
 ```
-
-**Response (200):** JSON array with inserted row(s).
-
-**Errors:** `500` if `reviews` table does not exist or insert fails.
-
----
 
 ### GET `/api/geocode`
 
-Calls the external **OpenStreetMap Nominatim** API to convert a location string into coordinates. Used by the club detail page for maps.
+Uses the OpenStreetMap Nominatim API to turn a meeting location into latitude and longitude.
 
-**Query parameters:**
+Example request:
 
-| Name | Required | Description |
-|------|----------|-------------|
-| `location` | Yes | Address or place name, e.g. `Stamp Student Union, College Park MD` |
+```txt
+/api/geocode?location=Stamp Student Union, College Park MD
+```
 
-**Example:** `GET /api/geocode?location=Stamp%20Student%20Union,%20College%20Park%20MD`
+This endpoint is used for the map feature.
 
-**Response (200):**
+### POST `/api/nala`
+
+Uses the OpenAI API to power Nala, the club recommendation assistant.
+
+Expected JSON body:
 
 ```json
 {
-  "location": "Stamp Student Union, College Park MD",
-  "lat": 38.9882,
-  "lon": -76.9447,
-  "display_name": "Adele H. Stamp Student Union, ..."
+  "message": "I want a club related to fitness or sports"
 }
 ```
 
-**Errors:**
+The response includes a short reply and club recommendations.
 
-- `400` – missing `location` parameter
-- `404` – no results from Nominatim
-- `500` – network or server error
+## Known Bugs
 
-**Note:** Nominatim requires a `User-Agent` header; the backend sends `TerpInsider/1.0`.
+- Some club locations may not geocode perfectly.
+- The map depends on the external Nominatim API, so it may fail if the API is slow or rate limited.
+- Reviews do not require user login, so names are user-entered.
+- Nala only recommends clubs already stored in the Supabase database.
 
----
+## Future Development Roadmap
 
-## Frontend fetch calls (rubric)
+Future developers could improve the project by:
 
-| Page | Fetch | Backend route | Purpose |
-|------|-------|---------------|---------|
-| Home (`main.js`) | GET | `/clubs` | Load categories |
-| Clubs (`clubs.js`) | GET | `/clubs` | List clubs |
-| Club detail (`club.js`) | GET | `/api/clubs/:id` | Club info |
-| Club detail | GET | `/api/geocode?location=...` | Map coordinates (external API via backend) |
-| Club detail | GET | `/api/reviews/:clubId` | Load reviews |
-| Club detail | POST | `/api/reviews` | Submit review |
-
-## Frontend libraries
-
-1. **Leaflet.js** – interactive map on club detail page (CDN)
-2. **Chart.js** – bar chart of review ratings (CDN)
-
-## Deployment (Vercel)
-
-1. Push code to GitHub.
-2. Import the repo in Vercel.
-3. Add environment variables in Vercel project settings:
-   - `SUPABASE_URL`
-   - `SUPABASE_KEY`
-4. Deploy. `vercel.json` routes all requests to `index.js`.
-
-## Supabase: create reviews table
-
-If you have not created the reviews table, run this in the Supabase SQL editor:
-
-```sql
-create table reviews (
-  id bigint generated always as identity primary key,
-  club_id bigint not null,
-  reviewer_name text not null,
-  rating smallint not null check (rating >= 1 and rating <= 5),
-  review_text text not null,
-  created_at timestamptz default now()
-);
-```
-
-Enable Row Level Security policies as needed for your project (service role key in backend bypasses RLS if using service key).
-
-## Known bugs
-
-- Nominatim may rate-limit frequent geocode requests.
-- First map load on a club without stored coordinates requires a geocode round trip.
-- Empty review list still shows an empty chart.
-
-## Roadmap
-
-- Cache geocoded coordinates in the `clubs` table
-- OpenAI-based club recommendations
-- Pagination for large club lists
-- Email or SSO for review identity
+- Saving geocoded latitude and longitude back into Supabase.
+- Adding login or UMD authentication.
+- Adding favorite clubs for each user.
+- Adding stronger search and filters.
+- Adding more club data.
+- Improving Nala’s recommendation logic.
+- Adding automated tests.
+- Improving mobile responsiveness.
