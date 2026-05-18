@@ -4,7 +4,7 @@
 
 TerpInsider helps University of Maryland students discover clubs and organizations. Students can browse a searchable directory, filter by category, view club details with meeting locations on a map, and leave reviews with rating charts. The app centralizes club discovery and makes it easier to compare organizations on campus.
 
-**Live deployment:** _(add your Vercel URL after deploying)_
+**Live deployment:** terpinsider.vercel.app
 
 ## Target Browsers
 
